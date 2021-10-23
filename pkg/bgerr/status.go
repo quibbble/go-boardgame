@@ -7,9 +7,10 @@ const (
 	StatusTooFewTeams = iota
 	StatusTooManyTeams
 	StatusInvalidOption
-	StatusInvalidTeam
-	StatusInvalidActionType
+	StatusUnknownTeam
+	StatusUnknownActionType
 	StatusInvalidActionDetails
+	StatusInvalidAction
 	StatusWrongTurn
 	StatusGameOver
 )
@@ -18,9 +19,10 @@ var statusText = map[int]string{
 	StatusTooFewTeams:          "Too Few Teams",
 	StatusTooManyTeams:         "Too Many Teams",
 	StatusInvalidOption:        "Invalid Option",
-	StatusInvalidTeam:          "Invalid Team",
-	StatusInvalidActionType:    "Invalid Game Action Type",
+	StatusUnknownTeam:          "Unknown Team",
+	StatusUnknownActionType:    "Unknown Action Type",
 	StatusInvalidActionDetails: "Invalid Action Details",
+	StatusInvalidAction:        "Invalid Action",
 	StatusWrongTurn:            "Wrong Turn",
 	StatusGameOver:             "Game Over",
 }
