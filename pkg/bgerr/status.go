@@ -1,4 +1,4 @@
-package error
+package bgerr
 
 // Status represents common board game status errors
 type Status int
