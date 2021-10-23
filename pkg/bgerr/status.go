@@ -4,8 +4,8 @@ package bgerr
 type Status int
 
 const (
-	StatusToFewTeams = iota
-	StatusToManyTeams
+	StatusTooFewTeams = iota
+	StatusTooManyTeams
 	StatusInvalidOption
 	StatusInvalidTeam
 	StatusInvalidActionType
@@ -15,8 +15,8 @@ const (
 )
 
 var statusText = map[int]string{
-	StatusToFewTeams:           "To Few Teams",
-	StatusToManyTeams:          "To Many Teams",
+	StatusTooFewTeams:          "Too Few Teams",
+	StatusTooManyTeams:         "Too Many Teams",
 	StatusInvalidOption:        "Invalid Option",
 	StatusInvalidTeam:          "Invalid Team",
 	StatusInvalidActionType:    "Invalid Game Action Type",
