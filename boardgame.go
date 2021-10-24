@@ -6,5 +6,7 @@ type BoardGame interface {
 	Do(action BoardGameAction) error
 
 	// GetSnapshot retrieves the current game state from 'team' view
-	GetSnapshot(team string) (BoardGameSnapshot, error)
+	// entering nothing returns a top-down snapshot meaning everything in the game is seen
+	// entering more than one team will error
+	GetSnapshot(team ...string) (*BoardGameSnapshot, error)
 }
