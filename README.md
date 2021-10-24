@@ -7,5 +7,6 @@ Go-boardgame is a simple package that can be used as the scaffolding to write th
 Below are some examples of projects that make use of this package:
 
 - [Carcassonne](https://github.com/quibbble/go-carcassonne)
-- [Tsuro](https://github.com/quibbble/go-tsuro)
+- [Codenames](https://github.com/quibbble/go-codenames)
 - [Connect4](https://github.com/quibbble/go-connect4)
+- [Tsuro](https://github.com/quibbble/go-tsuro)
