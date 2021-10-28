@@ -6,7 +6,12 @@ type BoardGame interface {
 	Do(action BoardGameAction) error
 
 	// GetSnapshot retrieves the current game state from 'team' view
-	// entering nothing returns a complete snapshot i.e. all hands, resources, etc.
-	// entering more than one team will error
+	// Entering nothing returns a complete snapshot i.e. all hands, resources, etc.
+	// Entering more than one team will error
 	GetSnapshot(team ...string) (*BoardGameSnapshot, error)
+
+	// GetSeed returns the seed used to generate randomness in the game
+	// Useful for recreating games for replays or rollbacks using the seed and list of game actions
+	// Some games do not require randomness in which case zero may be returned
+	GetSeed() int64
 }
