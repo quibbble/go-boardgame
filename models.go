@@ -7,7 +7,7 @@ type BoardGameOptions struct {
 
 	// MoreOptions allows for additional game options to be passed that are unique to each game
 	// Additional options are not required so this field can be ignored if desired
-	MoreOptions interface{}
+	MoreOptions interface{} `json:",omitempty"`
 }
 
 // BoardGameAction represents an action that is performed on the game state
@@ -20,7 +20,7 @@ type BoardGameAction struct {
 
 	// MoreDetails allows for additional action details to be passed that are unique to the action type
 	// Additional details are not required so this field can be ignored if desired
-	MoreDetails interface{}
+	MoreDetails interface{} `json:",omitempty"`
 }
 
 // BoardGameSnapshot represents the current state of the game
