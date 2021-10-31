@@ -6,7 +6,7 @@ type BoardGame interface {
 	Do(action *BoardGameAction) error
 
 	// GetSnapshot retrieves the current game state from 'team' view
-	// Entering nothing returns a complete snapshot i.e. all hands, resources, etc.
+	// Entering nothing returns a complete snapshot with no data hidden i.e. all hands, resources, etc.
 	// Entering more than one team will error
 	GetSnapshot(team ...string) (*BoardGameSnapshot, error)
 }

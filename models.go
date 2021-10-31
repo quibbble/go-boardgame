@@ -27,7 +27,7 @@ type BoardGameAction struct {
 	MoreDetails interface{} `json:",omitempty"`
 }
 
-// BoardGameSnapshot represents the current state of the game
+// BoardGameSnapshot represents the current state of the game that will be viewed by a player
 type BoardGameSnapshot struct {
 	// Turn is the turn of the current team - required
 	Turn string
@@ -43,12 +43,12 @@ type BoardGameSnapshot struct {
 	MoreData interface{} `json:",omitempty"`
 
 	// Targets are a list of actions that can be performed on the game state
-	// This can be a helpful feature when displaying valid actions to a player through a GUI
+	// This can allow players to view all valid actions through a GUI
 	// Optional feature not required to play a game and can be ignored if desired
 	Targets []*BoardGameAction `json:",omitempty"`
 
 	// Actions is a list of past game actions that have lead to the current game state
-	// This can be a helpful feature for undoing a past action or providing a replay of a game
+	// This can allow players to view game logs of past actions
 	// Optional feature not required to play a game and can be ignored if desired
 	Actions []*BoardGameAction `json:",omitempty"`
 }
