@@ -13,7 +13,10 @@ type BoardGameBuilder interface {
 type AdvancedBoardGameBuilder interface {
 	BoardGameBuilder
 
+	// CreateAdvanced creates an advanced game with desired options
+	CreateAdvanced(options *BoardGameOptions) (AdvancedBoardGame, error)
+
 	// Load takes a list of teams and game notation and rebuilds the game up to the point defined in the notation
 	// Length of teams must match the number of teams defined in notation
-	Load(teams []string, notation string) (BoardGame, error)
+	Load(teams []string, notation string) (AdvancedBoardGame, error)
 }
