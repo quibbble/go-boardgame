@@ -13,6 +13,7 @@ const (
 	StatusInvalidAction
 	StatusWrongTurn
 	StatusGameOver
+	StatusGameLoadFailure
 )
 
 var statusText = map[int]string{
@@ -25,6 +26,7 @@ var statusText = map[int]string{
 	StatusInvalidAction:        "Invalid Action",
 	StatusWrongTurn:            "Wrong Turn",
 	StatusGameOver:             "Game Over",
+	StatusGameLoadFailure:      "Game Load Failure",
 }
 
 // StatusText returns the text for a board game status code
