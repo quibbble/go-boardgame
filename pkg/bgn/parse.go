@@ -32,7 +32,7 @@ func ParseGame(s *scanner.Scanner) (*BGN, error) {
 	return &g, nil
 }
 
-func ParseTags(s *scanner.Scanner, g *BGN) error {
+func ParseTags(s *scanner.Scanner, bgn *BGN) error {
 	run := s.Peek()
 	inside := false
 	for run != scanner.EOF {
@@ -59,14 +59,14 @@ func ParseTags(s *scanner.Scanner, g *BGN) error {
 			tag := s.TokenText()
 			s.Scan()
 			val := s.TokenText()
-			g.Tags[tag] = strings.Trim(val, "\"")
+			bgn.Tags[tag] = strings.Trim(val, "\"")
 		}
 		run = s.Peek()
 	}
 	return nil
 }
 
-func ParseActions(s *scanner.Scanner, g *BGN) error {
+func ParseActions(s *scanner.Scanner, bgn *BGN) error {
 	run := s.Peek()
 	var action *Action
 	for run != scanner.EOF {
@@ -94,11 +94,11 @@ func ParseActions(s *scanner.Scanner, g *BGN) error {
 				}
 				split := strings.Split(details, ".")
 				action.Details = split
-				g.Actions = append(g.Actions, *action)
+				bgn.Actions = append(bgn.Actions, *action)
 				action = nil
 			} else {
 				if action != nil {
-					g.Actions = append(g.Actions, *action)
+					bgn.Actions = append(bgn.Actions, *action)
 				}
 				base := s.TokenText()
 				for s.Peek() != ' ' && s.Peek() != '-' && s.Peek() != scanner.EOF {
@@ -120,7 +120,7 @@ func ParseActions(s *scanner.Scanner, g *BGN) error {
 		}
 		run = s.Peek()
 		if run == scanner.EOF && action != nil {
-			g.Actions = append(g.Actions, *action)
+			bgn.Actions = append(bgn.Actions, *action)
 		}
 	}
 	return nil
