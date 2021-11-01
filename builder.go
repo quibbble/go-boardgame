@@ -1,5 +1,7 @@
 package go_boardgame
 
+import "github.com/quibbble/go-boardgame/pkg/bgn"
+
 // BoardGameBuilder builds a game given a set of options
 type BoardGameBuilder interface {
 	// Create creates a game with desired options
@@ -9,14 +11,13 @@ type BoardGameBuilder interface {
 	Key() string
 }
 
-// BoardGameWithNotationBuilder builds a game with additional notation functionality
-type BoardGameWithNotationBuilder interface {
+// BoardGameWithBGNBuilder builds a game with additional bgn functionality
+type BoardGameWithBGNBuilder interface {
 	BoardGameBuilder
 
-	// CreateWithNotation creates a game with desired options
-	CreateWithNotation(options *BoardGameOptions) (BoardGameWithNotation, error)
+	// CreateWithBGN creates a game with desired options
+	CreateWithBGN(options *BoardGameOptions) (BoardGameWithBGN, error)
 
-	// Load takes a list of teams and game notation and rebuilds the game up to the point defined in the notation
-	// Length of teams must match the number of teams defined in notation
-	Load(teams []string, notation string) (BoardGameWithNotation, error)
+	// Load takes bgn and rebuilds the game up to the point defined in the notation
+	Load(bgn *bgn.BGN) (BoardGameWithBGN, error)
 }

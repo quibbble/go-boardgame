@@ -1,5 +1,7 @@
 package go_boardgame
 
+import "github.com/quibbble/go-boardgame/pkg/bgn"
+
 // BoardGame is a representation of a board game allowing one to perform actions on the game as well as to retrieve game data
 type BoardGame interface {
 	// Do performs an action on the game
@@ -11,13 +13,10 @@ type BoardGame interface {
 	GetSnapshot(team ...string) (*BoardGameSnapshot, error)
 }
 
-// BoardGameWithNotation provides extra notation functionality that does not need to be implemented to play a game
-type BoardGameWithNotation interface {
+// BoardGameWithBGN provides extra bgn functionality that does not necessarily need to be implemented to play a game
+type BoardGameWithBGN interface {
 	BoardGame
 
-	// GetNotation returns a simplified notation allowing for easy storage and retrieval of games
-	// This notation can be defined as desired but below is a simple example of a potential implementation
-	// "'num teams':'seed':'create option details':'team num','action num','details','details',...;..."
-	// EX: "2:123::0,0,0,F;1,1;" 2 teams, seed is 123, no extra options, team 0 played action 0 with details 0 and F, team 1 played action 1
-	GetNotation() string
+	// GetBGN returns the board game notation of the game
+	GetBGN() *bgn.BGN
 }
