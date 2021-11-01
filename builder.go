@@ -9,14 +9,14 @@ type BoardGameBuilder interface {
 	Key() string
 }
 
-// AdvancedBoardGameBuilder provides additional functionality that is not required to build a game but can be useful in many cases
-type AdvancedBoardGameBuilder interface {
+// BoardGameWithNotationBuilder builds a game with additional notation functionality
+type BoardGameWithNotationBuilder interface {
 	BoardGameBuilder
 
-	// CreateAdvanced creates an advanced game with desired options
-	CreateAdvanced(options *BoardGameOptions) (AdvancedBoardGame, error)
+	// CreateWithNotation creates a game with desired options
+	CreateWithNotation(options *BoardGameOptions) (BoardGameWithNotation, error)
 
 	// Load takes a list of teams and game notation and rebuilds the game up to the point defined in the notation
 	// Length of teams must match the number of teams defined in notation
-	Load(teams []string, notation string) (AdvancedBoardGame, error)
+	Load(teams []string, notation string) (BoardGameWithNotation, error)
 }

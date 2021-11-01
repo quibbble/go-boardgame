@@ -11,8 +11,8 @@ type BoardGame interface {
 	GetSnapshot(team ...string) (*BoardGameSnapshot, error)
 }
 
-// AdvancedBoardGame provides additional functionality that is not required to play a game but can be useful in many cases
-type AdvancedBoardGame interface {
+// BoardGameWithNotation provides extra notation functionality that does not need to be implemented to play a game
+type BoardGameWithNotation interface {
 	BoardGame
 
 	// GetNotation returns a simplified notation allowing for easy storage and retrieval of games
