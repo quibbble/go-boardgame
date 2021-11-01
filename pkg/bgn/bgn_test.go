@@ -59,13 +59,13 @@ func Test_BGN_Parse(t *testing.T) {
 			shouldError: false,
 		},
 		{
-			name:        "too many dashes should error",
-			bgn:         "[Teams \"red, blue\"][Seed \"123\"][Game \"Carcassonne\"]10a-1.2-1.1",
+			name:        "too many ampersands should error",
+			bgn:         "[Teams \"red, blue\"][Seed \"123\"][Game \"Carcassonne\"]10a&1.2&1.1",
 			shouldError: true,
 		},
 		{
 			name:        "complex bgn should succeed",
-			bgn:         "[Teams \"red, blue\"][Seed \"123\"][Game \"Carcassonne\"][Date \"11-01-2021\"]0a-1.2 {Comment} 0b-1.2.T.R 1c 1a-1.3 1b-1.3.K.B",
+			bgn:         "[Teams \"red, blue\"][Seed \"123\"][Game \"Carcassonne\"][Date \"11-01-2021\"]0a&1.2 {Comment} 0b&1.2.T.R 1c 1a&1.3 1b&1.3.K.B",
 			shouldError: false,
 		},
 	}
@@ -74,7 +74,7 @@ func Test_BGN_Parse(t *testing.T) {
 		r := strings.NewReader(test.bgn)
 		sc := scanner.Scanner{}
 		sc.Init(r)
-		_, err := ParseGame(&sc)
+		_, err := Parse(&sc)
 		assert.Equal(t, test.shouldError, err != nil, test.name)
 	}
 }

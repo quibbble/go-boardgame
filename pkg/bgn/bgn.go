@@ -14,10 +14,10 @@ Example Tags: [Game "Carcassonne"][Teams "A, B"][Seed "123"][Date "10-31-2021"][
 Actions are the list of steps teams have taken to reach the current game state
 An action requires the team index - index of team in "Teams" tag - and the action key
 Additional details such i.e. x,y locations, card value, etc. may be included in the details section of the action
-Example Action: 0c {team A does action c} 0a-1.0 {team A does action a with details 1 and 0}
+Example Action: 0c {team A does action c} 0a&1.0 {team A does action a with details 1 and 0}
 
 Putting it all together:
-[Game "Carcassonne"][Teams "A, B"][Seed "123"][Date "10-31-2021"][Halloween "Spooky"]0c {comment like this} 0a-1.0
+[Game "Carcassonne"][Teams "A, B"][Seed "123"][Date "10-31-2021"][Halloween "Spooky"]0c {comment like this} 0a&1.0
 */
 type BGN struct {
 	Tags    map[string]string
@@ -58,7 +58,7 @@ func (a *Action) String() string {
 	}
 	if len(details) > 0 {
 		details = details[:len(details)-1]
-		bgn = fmt.Sprintf("%s-%s", bgn, details)
+		bgn = fmt.Sprintf("%s&%s", bgn, details)
 	}
 	return bgn
 }

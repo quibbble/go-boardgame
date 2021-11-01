@@ -14,7 +14,7 @@ var RequiredTags = []string{
 	"Seed",  // seed for deterministic randomness
 }
 
-func ParseGame(s *scanner.Scanner) (*BGN, error) {
+func Parse(s *scanner.Scanner) (*BGN, error) {
 	g := BGN{Tags: map[string]string{}, Actions: []Action{}}
 	err := ParseTags(s, &g)
 	if err != nil {
@@ -79,7 +79,7 @@ func ParseActions(s *scanner.Scanner, bgn *BGN) error {
 			}
 		default:
 			s.Scan()
-			if s.TokenText() == "-" {
+			if s.TokenText() == "&" {
 				if action == nil {
 					return fmt.Errorf("cannot have action details before base")
 				}
@@ -87,8 +87,8 @@ func ParseActions(s *scanner.Scanner, bgn *BGN) error {
 				details := s.TokenText()
 				for s.Peek() != ' ' && s.Peek() != scanner.EOF {
 					s.Scan()
-					if s.TokenText() == "-" {
-						return fmt.Errorf("mutple dashes found in action")
+					if s.TokenText() == "&" {
+						return fmt.Errorf("multiple ampersands found in action")
 					}
 					details += s.TokenText()
 				}
@@ -101,7 +101,7 @@ func ParseActions(s *scanner.Scanner, bgn *BGN) error {
 					bgn.Actions = append(bgn.Actions, *action)
 				}
 				base := s.TokenText()
-				for s.Peek() != ' ' && s.Peek() != '-' && s.Peek() != scanner.EOF {
+				for s.Peek() != ' ' && s.Peek() != '&' && s.Peek() != scanner.EOF {
 					s.Scan()
 					base += s.TokenText()
 				}
