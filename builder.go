@@ -18,6 +18,6 @@ type BoardGameWithBGNBuilder interface {
 	// CreateWithBGN creates a game with desired options
 	CreateWithBGN(options *BoardGameOptions) (BoardGameWithBGN, error)
 
-	// Load takes bgn and rebuilds the game up to the point defined in the notation
-	Load(bgn *bgn.BGN) (BoardGameWithBGN, error)
+	// Load loads a game in board game notation into a normal game
+	Load(bgn *bgn.Game) (BoardGameWithBGN, error)
 }

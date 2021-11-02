@@ -11,11 +11,10 @@ import (
 var RequiredTags = []string{
 	"Game",  // the name of the game being played
 	"Teams", // list of teams playing the game
-	"Seed",  // seed for deterministic randomness
 }
 
-func Parse(s *scanner.Scanner) (*BGN, error) {
-	g := BGN{Tags: map[string]string{}, Actions: []Action{}}
+func Parse(s *scanner.Scanner) (*Game, error) {
+	g := Game{Tags: map[string]string{}, Actions: []Action{}}
 	err := ParseTags(s, &g)
 	if err != nil {
 		return nil, err
@@ -32,7 +31,7 @@ func Parse(s *scanner.Scanner) (*BGN, error) {
 	return &g, nil
 }
 
-func ParseTags(s *scanner.Scanner, bgn *BGN) error {
+func ParseTags(s *scanner.Scanner, g *Game) error {
 	run := s.Peek()
 	inside := false
 	for run != scanner.EOF {
@@ -59,14 +58,14 @@ func ParseTags(s *scanner.Scanner, bgn *BGN) error {
 			tag := s.TokenText()
 			s.Scan()
 			val := s.TokenText()
-			bgn.Tags[tag] = strings.Trim(val, "\"")
+			g.Tags[tag] = strings.Trim(val, "\"")
 		}
 		run = s.Peek()
 	}
 	return nil
 }
 
-func ParseActions(s *scanner.Scanner, bgn *BGN) error {
+func ParseActions(s *scanner.Scanner, g *Game) error {
 	run := s.Peek()
 	var action *Action
 	for run != scanner.EOF {
@@ -94,11 +93,11 @@ func ParseActions(s *scanner.Scanner, bgn *BGN) error {
 				}
 				split := strings.Split(details, ".")
 				action.Details = split
-				bgn.Actions = append(bgn.Actions, *action)
+				g.Actions = append(g.Actions, *action)
 				action = nil
 			} else {
 				if action != nil {
-					bgn.Actions = append(bgn.Actions, *action)
+					g.Actions = append(g.Actions, *action)
 				}
 				base := s.TokenText()
 				for s.Peek() != ' ' && s.Peek() != '&' && s.Peek() != scanner.EOF {
@@ -120,7 +119,7 @@ func ParseActions(s *scanner.Scanner, bgn *BGN) error {
 		}
 		run = s.Peek()
 		if run == scanner.EOF && action != nil {
-			bgn.Actions = append(bgn.Actions, *action)
+			g.Actions = append(g.Actions, *action)
 		}
 	}
 	return nil

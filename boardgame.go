@@ -17,6 +17,6 @@ type BoardGame interface {
 type BoardGameWithBGN interface {
 	BoardGame
 
-	// GetBGN returns the board game notation of the game
-	GetBGN() *bgn.BGN
+	// GetBGN returns the game in board game notation
+	GetBGN() *bgn.Game
 }

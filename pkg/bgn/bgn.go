@@ -2,36 +2,20 @@ package bgn
 
 import "fmt"
 
-/*
-BGN or Board Game Notation is a spin on PGN or Portable Game Notation that can be applied to virtually any board game
-
-A BGN is made of a set of tags and actions
-
-Tags describe information used to create the game as well as other helpful data
-Required tags include Game, Teams, and Seed
-Example Tags: [Game "Carcassonne"][Teams "A, B"][Seed "123"][Date "10-31-2021"][Halloween "Spooky"]
-
-Actions are the list of steps teams have taken to reach the current game state
-An action requires the team index - index of team in "Teams" tag - and the action key
-Additional details such i.e. x,y locations, card value, etc. may be included in the details section of the action
-Example Action: 0c {team A does action c} 0a&1.0 {team A does action a with details 1 and 0}
-
-Putting it all together:
-[Game "Carcassonne"][Teams "A, B"][Seed "123"][Date "10-31-2021"][Halloween "Spooky"]0c {comment like this} 0a&1.0
-*/
-type BGN struct {
+// Game is a representation of a game in Board Game Notation (BGN)
+type Game struct {
 	Tags    map[string]string
 	Actions []Action
 }
 
-func (b *BGN) String() string {
+func (g *Game) String() string {
 	bgn := ""
-	for key, value := range b.Tags {
+	for key, value := range g.Tags {
 		bgn += fmt.Sprintf("[%s \"%s\"]\n", key, value)
 	}
 	bgn += "\n"
 	line := ""
-	for _, action := range b.Actions {
+	for _, action := range g.Actions {
 		line += fmt.Sprintf("%s ", action.String())
 		if len(line) > 70 {
 			bgn += fmt.Sprintf("%s\n", line[:len(line)-1])
