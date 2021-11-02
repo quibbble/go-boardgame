@@ -21,7 +21,7 @@ Tags are key value pairs used to describe the initial game state as well as to s
 ```
 
 #### Tag Requirements
-There are two tags necessary for any game: Game and Teams
+There are two tags necessary for any game, Game and Teams.
 - Game: the name of the game represented. Ex: `[Game "Carcassonne"]`
 - Teams: the list of teams playing the game. Ex: `[Teams "TeamA, TeamB"]`
 
@@ -55,7 +55,7 @@ comments like so} 0a&2.2 0b&2.2.t.l
 
 ## Usage
 
-This package provides both a method of creating as well as parsing BGN.
+This package provides both a method of creating as well as parsing BGN text.
 
 ### Create BGN
 
