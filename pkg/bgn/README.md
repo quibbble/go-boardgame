@@ -1,10 +1,10 @@
 # Board Game Notation - BGN
 
-Many different standards exist for simplified human and machine readable notation of games. Chess is a common example with notations such as Portable Game Notation (PGN) or Forsyth–Edwards Notation (FEN). While useful for chess, these notations have difficulties being applied to other games. Currently no single standard exists that can be applied to any game hence the introduction of BGN as a potential solution to this problem.
+Many different standards exist for simplified human and machine readable notation of games. Chess is a common example with notations such as Portable Game Notation (PGN) or Forsyth–Edwards Notation (FEN). While useful for chess, these notations have difficulties being applied to other games. Currently no single standard exists that can be applied to any game hence the introduction of Board Game Notation (BGN) as a potential solution to this problem.
 
 ## Format
 
-BGN is structured into two distinct sections: tags and actions.
+BGN is structured into two distinct sections, tags and actions.
 
 ### Tags
 
@@ -20,6 +20,7 @@ Tags are key value pairs used to describe the initial game state as well as to s
 [Game "Carcassonne"]
 ```
 
+#### Tag Requirements
 There are two tags necessary for any game: Game and Teams
 - Game: the name of the game represented. Ex: `[Game "Carcassonne"]`
 - Teams: the list of teams playing the game. Ex: `[Teams "TeamA, TeamB"]`
@@ -30,7 +31,7 @@ Actions are an ordered list of actions teams take to create the current game sta
 
 #### Action Format
 ```
-'team index''action character'&'action detail 1'.'action detail 2'...
+{team index}{action character}&{action detail 1}.{action detail 2}...
 ```
 
 #### Action Examples
@@ -49,7 +50,7 @@ Actions are an ordered list of actions teams take to create the current game sta
 [Date "10-31-2021"]
 
 0c 0a&1.2 0b&1.2.k.b 1c 1c 1c 1a&0.1 1b&0.1.m {you can add
-comments like so} 0a&2.2 0a&2.2.t.l
+comments like so} 0a&2.2 0b&2.2.t.l
 ```
 
 ## Usage
@@ -78,7 +79,7 @@ formatted := game.String()
 
 ### Parse BGN
 ```go
-sample := "[Game "Carcassonne"][Teams "TeamA, TeamB"][Seed "123"]0c 0a&1.2"
+sample := "[Game \"Carcassonne\"][Teams \"TeamA, TeamB\"][Seed \"123\"]0c 0a&1.2"
 r := strings.NewReader(sample)
 sc := scanner.Scanner{}
 sc.Init(r)
