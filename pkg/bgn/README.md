@@ -1,5 +1,7 @@
 # Board Game Notation - BGN
 
+[![GoDoc](https://godoc.org/github.com/quibbble/go-boardgame/pkg/bgn?status.svg)](https://godoc.org/github.com/quibbble/go-boardgame/pkg/bgn)
+
 Many different standards exist for simplified human and machine readable notation of games. Chess is a common example with notations such as Portable Game Notation (PGN) or Forsyth–Edwards Notation (FEN). While useful for chess, these notations have difficulties being applied to other games. Currently no single standard exists that can be applied to any game hence the introduction of Board Game Notation (BGN) as a potential solution to this problem.
 
 ## Format

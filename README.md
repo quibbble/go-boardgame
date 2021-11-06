@@ -18,8 +18,8 @@ go get github.com/quibbble/go-boardgame
 
 Go-boardgame also contains a number of helpful packages that can be optionally used to speed up development:
 
-- [bgerr](https://github.com/quibbble/go-boardgame/pkg/bgerr) adds helpful error statuses and messages to board games.
-- [bgn](https://github.com/quibbble/go-boardgame/pkg/bgn) adds a standardized machine-readable notation to board games for easy storage and game recreation.
+- [bgerr](https://github.com/quibbble/go-boardgame/tree/main/pkg/bgerr) adds helpful error statuses and messages to board games.
+- [bgn](https://github.com/quibbble/go-boardgame/tree/main/pkg/bgn) adds a standardized machine-readable notation to board games for easy storage and game recreation.
 
 ## Future Plans
 
