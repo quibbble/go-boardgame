@@ -23,7 +23,7 @@ Go-boardgame also contains a number of helpful packages that can be optionally u
 
 ## Examples
 
-[Tic-Tac-Toe](https://github.com/quibbble/go-boardgame/tree/main/examples/tictactoe) provides a simple example implementation of this package.
+[Tic-Tac-Toe](https://github.com/quibbble/go-boardgame/tree/main/examples/tictactoe) provides a simple example implementation and is a good place to start.
 
 Below are a few more complex examples of games implemented with this package as well:
 

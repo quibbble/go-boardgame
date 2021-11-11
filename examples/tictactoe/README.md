@@ -1,8 +1,8 @@
 # Tic-Tac-Toe Example
 
-This Tic-Tac-Toe game provides a simple example of one way to use this package. While a helpful example, this package was purposely left with room for interpretation and different implementation styles due to the vast differences in every board game. This is by no means the only or necessarily best way to implement a game.
+This is an example implementation of Tic-Tac-Toe using the [go-boardgame](https://github.com/quibbble/go-boardgame) package. This is by no means the only or necessarily best way to implement a game but is a good place to start when writing a new game. 
 
-## Structure
+# Layout 
 
 ### builder.go
 
