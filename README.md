@@ -2,7 +2,7 @@
 
 [![GoDoc](https://godoc.org/github.com/quibbble/go-boardgame?status.svg)](https://godoc.org/github.com/quibbble/go-boardgame)
 
-Go-boardgame is a simple [Go](https://golang.org) package that can be used as the scaffolding to write the game logic for any board or turn based game. This may also be used in conjunction with the [go-boardgame-networking](https://github.com/quibbble/board-game-networking) project which provides an easy-to-use networking layer for games created with this package.
+Go-boardgame is a simple [Go](https://golang.org) package that can be used as the scaffolding to write the game logic for any board or turn based game.
 
 ## Status
 
@@ -23,7 +23,7 @@ Go-boardgame also contains a number of helpful packages that can be optionally u
 
 ## Examples
 
-A simple [Tic-Tac-Toe](https://github.com/quibbble/go-boardgame/tree/main/examples/tictactoe) example which implements go-boardgame can be found in the [examples](https://github.com/quibbble/go-boardgame/tree/main/examples) directory.
+[Tic-Tac-Toe](https://github.com/quibbble/go-boardgame/tree/main/examples/tictactoe) provides a simple example implementation of this package.
 
 Below are a few more complex examples of games implemented with this package as well:
 
