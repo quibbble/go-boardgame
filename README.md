@@ -6,7 +6,7 @@ Go-boardgame is a simple [Go](https://golang.org) package that can be used as th
 
 ## Status
 
-This package is still under active development and may be unstable at this time.
+This package is stable with new features in the works. 
 
 ## Installation
 

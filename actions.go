@@ -8,10 +8,11 @@ import (
 
 // Common actions every game may utilize if desired
 const (
-	ActionSetWinners = "SetWinners" // overrides the winner(s) of a game
+	// ActionSetWinners sets the winner(s) of a game
+	ActionSetWinners = "SetWinners"
 )
 
-// SetWinnersActionDetails overrides the current winner(s) of the game with Winners
+// SetWinnersActionDetails sets the current winner(s) of the game with Winners
 type SetWinnersActionDetails struct {
 	Winners []string
 }
@@ -19,7 +20,7 @@ type SetWinnersActionDetails struct {
 // EncodeBGN converts SetWinnersActionDetails into bgn.Action Details object given the list of teams in game
 func (o *SetWinnersActionDetails) EncodeBGN(teams []string) ([]string, error) {
 	indices := make([]string, 0)
-	for _, winner := range teams {
+	for _, winner := range o.Winners {
 		index := -1
 		for i, team := range teams {
 			if winner == team {

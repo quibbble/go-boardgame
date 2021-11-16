@@ -1,6 +1,6 @@
 package tictactoe
 
-// All actions types a player can make
+// Action types
 const (
 	// ActionMarkLocation allows players to mark and X or O on the board
 	ActionMarkLocation = "MarkLocation"
