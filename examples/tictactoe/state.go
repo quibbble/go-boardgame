@@ -3,7 +3,6 @@ package tictactoe
 import (
 	"fmt"
 	"github.com/quibbble/go-boardgame/pkg/bgerr"
-	"math/rand"
 )
 
 const size = 3
@@ -21,9 +20,9 @@ type state struct {
 	board   [size][size]string
 }
 
-func newState(teams []string, random *rand.Rand) *state {
+func newState(teams []string) *state {
 	return &state{
-		turn:    teams[random.Intn(len(teams))],
+		turn:    teams[0],
 		teams:   teams,
 		winners: make([]string, 0),
 		board:   [size][size]string{},

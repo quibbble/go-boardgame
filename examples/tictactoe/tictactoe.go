@@ -5,7 +5,6 @@ import (
 	"github.com/mitchellh/mapstructure"
 	bg "github.com/quibbble/go-boardgame"
 	"github.com/quibbble/go-boardgame/pkg/bgerr"
-	"math/rand"
 )
 
 const (
@@ -17,7 +16,6 @@ const (
 type TicTacToe struct {
 	state   *state
 	actions []*bg.BoardGameAction
-	seed    int64
 }
 
 // NewTicTacToe creates a new game instance
@@ -34,9 +32,8 @@ func NewTicTacToe(options *bg.BoardGameOptions) (*TicTacToe, error) {
 		}
 	}
 	return &TicTacToe{
-		state:   newState(options.Teams, rand.New(rand.NewSource(options.Seed))),
+		state:   newState(options.Teams),
 		actions: make([]*bg.BoardGameAction, 0),
-		seed:    options.Seed,
 	}, nil
 }
 

@@ -5,10 +5,6 @@ type BoardGameOptions struct {
 	// Teams is the list of teams that will be playing the game - required
 	Teams []string
 
-	// Seed is the number used to generate deterministic randomness - required
-	// This allows for features such as replays or rollbacks of games
-	Seed int64
-
 	// MoreOptions allows for additional game options to be passed that are unique to each game
 	// Additional options are not required for every game so this field can be ignored if desired
 	MoreOptions interface{} `json:",omitempty"`
