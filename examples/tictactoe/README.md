@@ -32,7 +32,6 @@ All Board Game Notation logic lives here. This is not necessary to play a game a
 builder := &Builder{}
 game, err := builder.Create(&bg.BoardGameOptions{
     Teams: []string{"TeamA", "TeamB"},
-    Seed: 123,
 })
 ```
 
