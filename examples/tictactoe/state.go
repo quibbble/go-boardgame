@@ -2,6 +2,9 @@ package tictactoe
 
 import (
 	"fmt"
+	"strings"
+
+	bg "github.com/quibbble/go-boardgame"
 	"github.com/quibbble/go-boardgame/pkg/bgerr"
 )
 
@@ -69,6 +72,36 @@ func (s *state) MarkLocation(team string, row, column int) error {
 	// update turn
 	s.turn = s.teams[(index+1)%2]
 	return nil
+}
+
+func (s *state) targets() []*bg.BoardGameAction {
+	targets := make([]*bg.BoardGameAction, 0)
+	for r, row := range s.board {
+		for c, loc := range row {
+			if loc == "" {
+				targets = append(targets, &bg.BoardGameAction{
+					Team:       s.turn,
+					ActionType: ActionMarkLocation,
+					MoreDetails: MarkLocationActionDetails{
+						Row:    r,
+						Column: c,
+					},
+				})
+			}
+		}
+	}
+	return targets
+}
+
+func (s *state) message() string {
+	message := fmt.Sprintf("%s must mark a location", s.turn)
+	if len(s.winners) > 0 {
+		message = fmt.Sprintf("%s tie", strings.Join(s.winners, " and "))
+		if len(s.winners) == 1 {
+			message = fmt.Sprintf("%s wins", s.winners[0])
+		}
+	}
+	return message
 }
 
 func winner(board [size][size]string) string {

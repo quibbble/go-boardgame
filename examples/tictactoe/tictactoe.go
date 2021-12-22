@@ -2,6 +2,7 @@ package tictactoe
 
 import (
 	"fmt"
+
 	"github.com/mitchellh/mapstructure"
 	bg "github.com/quibbble/go-boardgame"
 	"github.com/quibbble/go-boardgame/pkg/bgerr"
@@ -76,6 +77,10 @@ func (t *TicTacToe) GetSnapshot(team ...string) (*bg.BoardGameSnapshot, error) {
 			Status: bgerr.StatusTooManyTeams,
 		}
 	}
+	var targets []*bg.BoardGameAction
+	if len(t.state.winners) == 0 && (len(team) == 0 || (len(team) == 1 && team[0] == t.state.turn)) {
+		targets = t.state.targets()
+	}
 	return &bg.BoardGameSnapshot{
 		Turn:    t.state.turn,
 		Teams:   t.state.teams,
@@ -83,6 +88,8 @@ func (t *TicTacToe) GetSnapshot(team ...string) (*bg.BoardGameSnapshot, error) {
 		MoreData: TicTacToeSnapshotData{
 			Board: t.state.board,
 		},
+		Targets: targets,
 		Actions: t.actions,
+		Message: t.state.message(),
 	}, nil
 }

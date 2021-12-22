@@ -47,4 +47,8 @@ type BoardGameSnapshot struct {
 	// This can allow players to view game logs of past actions
 	// Optional feature not required to play a game and can be ignored if desired
 	Actions []*BoardGameAction `json:",omitempty"`
+
+	// Message provides players with information about what to do next
+	// Optional feature not required to play a game and can be ignored if desired
+	Message string `json:",omitempty"`
 }

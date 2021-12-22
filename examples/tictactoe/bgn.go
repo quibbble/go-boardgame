@@ -2,12 +2,13 @@ package tictactoe
 
 import (
 	"fmt"
+	"strconv"
+	"strings"
+
 	"github.com/mitchellh/mapstructure"
 	bg "github.com/quibbble/go-boardgame"
 	"github.com/quibbble/go-boardgame/pkg/bgerr"
 	"github.com/quibbble/go-boardgame/pkg/bgn"
-	"strconv"
-	"strings"
 )
 
 // converts action types to correct bgn notation
@@ -54,7 +55,6 @@ func (t *TicTacToe) GetBGN() *bgn.Game {
 	tags := map[string]string{
 		"Game":  key,
 		"Teams": strings.Join(t.state.teams, ", "),
-		"Seed":  fmt.Sprintf("%d", t.seed),
 	}
 	actions := make([]bgn.Action, 0)
 	for _, action := range t.actions {
@@ -97,23 +97,8 @@ func (b *Builder) Load(game *bgn.Game) (bg.BoardGameWithBGN, error) {
 		}
 	}
 	teams := strings.Split(teamsStr, ", ")
-	seedStr, ok := game.Tags["Seed"]
-	if !ok {
-		return nil, &bgerr.Error{
-			Err:    fmt.Errorf("seed tag missing"),
-			Status: bgerr.StatusBGNDecodingFailure,
-		}
-	}
-	seed, err := strconv.Atoi(seedStr)
-	if err != nil {
-		return nil, &bgerr.Error{
-			Err:    err,
-			Status: bgerr.StatusBGNDecodingFailure,
-		}
-	}
 	g, err := b.CreateWithBGN(&bg.BoardGameOptions{
 		Teams: teams,
-		Seed:  int64(seed),
 	})
 	if err != nil {
 		return nil, err
