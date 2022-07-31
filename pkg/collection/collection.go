@@ -16,12 +16,14 @@ type Collection[T any] struct {
 	random *rand.Rand
 }
 
+// Add adds any numver of items to the end of the collection
 func (c *Collection[T]) Add(items ...T) *Collection[T] {
 	copy := c.Copy()
 	copy.items = append(copy.items, items...)
 	return copy
 }
 
+// Draw removes an item from the start of the collection
 func (c *Collection[T]) Draw() (*T, *Collection[T], error) {
 	if len(c.items) == 0 {
 		return nil, nil, fmt.Errorf(collectionEmptyErr)
@@ -33,6 +35,7 @@ func (c *Collection[T]) Draw() (*T, *Collection[T], error) {
 	return &c.items[0], copy, nil
 }
 
+// Remove removes an item by index
 func (c *Collection[T]) Remove(index int) (*Collection[T], error) {
 	if index < 0 || index >= len(c.items) {
 		return nil, fmt.Errorf(idxOutOfBoundsErr)
@@ -42,6 +45,7 @@ func (c *Collection[T]) Remove(index int) (*Collection[T], error) {
 	return copy, nil
 }
 
+// Shuffle randomly shuffles the collection
 func (c *Collection[T]) Shuffle() *Collection[T] {
 	if c.random == nil {
 		// if random source was never set then set it manually
@@ -58,25 +62,30 @@ func (c *Collection[T]) Shuffle() *Collection[T] {
 	return copy
 }
 
+// GetItems returns the items in the collection
 func (c *Collection[T]) GetItems() []T {
 	return c.items
 }
 
+// GetRandomness returns the random object used for deterministic randomness
 func (c *Collection[T]) GetRandomness() *rand.Rand {
 	return c.random
 }
 
+// SetRandomness sets the random object used for deterministic randomness
 func (c *Collection[T]) SetRandomness(random *rand.Rand) {
 	c.random = random
 }
 
+// GetSize returns the number of items in the collection
 func (c *Collection[T]) GetSize() int {
 	return len(c.items)
 }
 
+// Copy returns a new copy of the collection
 func (c *Collection[T]) Copy() *Collection[T] {
-	// because maps anc slices are references they do not get copiec even when passing by value
-	// clone creates new slices to mimic passing the slice by value
+	// because maps and slices are references they do not get copied even when passing by value
+	// copy creates new slices to mimic passing the slice by value
 	return &Collection[T]{
 		items:  append(make([]T, 0), c.items...),
 		random: c.random,

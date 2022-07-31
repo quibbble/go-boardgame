@@ -20,7 +20,7 @@ Go-boardgame also contains a number of helpful packages that can be optionally u
 
 - [bgerr](https://github.com/quibbble/go-boardgame/tree/main/pkg/bgerr) adds helpful error statuses and messages to board games.
 - [bgn](https://github.com/quibbble/go-boardgame/tree/main/pkg/bgn) adds a standardized machine-readable notation to board games for easy storage and game recreation.
-- [collection](https://github.com/quibbble/go-boardgame/tree/main/pkg/collection) adds logic that can be used for decks, hands, etc. This package makes use of [Go generics](https://go.dev/doc/tutorial/generics) so can be used with any of your custom types.
+- [collection](https://github.com/quibbble/go-boardgame/tree/main/pkg/collection) adds logic that can be used for decks, hands, etc. This package makes use of [Go generics](https://go.dev/doc/tutorial/generics) so that it can be used with any of your custom types.
 
 ## Examples
 
