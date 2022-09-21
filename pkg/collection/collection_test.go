@@ -93,6 +93,7 @@ func Test_CollectionDraw(t *testing.T) {
 	testCases := []struct {
 		name        string
 		collection  Collection[string]
+		draw        string
 		shouldError bool
 	}{
 		{
@@ -103,14 +104,19 @@ func Test_CollectionDraw(t *testing.T) {
 		{
 			name:        "draw on non-empty collection should not error",
 			collection:  Collection[string]{items: []string{"A", "B", "C"}},
+			draw:        "A",
 			shouldError: false,
 		},
 	}
 	for _, test := range testCases {
-		_, _, err := test.collection.Draw()
+		draw, collection, err := test.collection.Draw()
 		if (err != nil) != test.shouldError {
 			t.Fatalf(test.name)
 			t.FailNow()
+		}
+		if !test.shouldError {
+			assert.Equal(t, test.collection.GetSize()-1, collection.GetSize())
+			assert.Equal(t, test.draw, *draw)
 		}
 	}
 }

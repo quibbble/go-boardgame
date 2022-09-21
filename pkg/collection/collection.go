@@ -18,9 +18,9 @@ type Collection[T any] struct {
 
 // Add adds any numver of items to the end of the collection
 func (c *Collection[T]) Add(items ...T) *Collection[T] {
-	copy := c.Copy()
-	copy.items = append(copy.items, items...)
-	return copy
+	collection := c.Copy()
+	collection.items = append(collection.items, items...)
+	return collection
 }
 
 // Draw removes an item from the start of the collection
@@ -28,11 +28,12 @@ func (c *Collection[T]) Draw() (*T, *Collection[T], error) {
 	if len(c.items) == 0 {
 		return nil, nil, fmt.Errorf(collectionEmptyErr)
 	}
-	copy, err := c.Remove(0)
+	draw := c.items[0]
+	collection, err := c.Remove(0)
 	if err != nil {
 		return nil, nil, err
 	}
-	return &c.items[0], copy, nil
+	return &draw, collection, nil
 }
 
 // Remove removes an item by index
@@ -40,9 +41,9 @@ func (c *Collection[T]) Remove(index int) (*Collection[T], error) {
 	if index < 0 || index >= len(c.items) {
 		return nil, fmt.Errorf(idxOutOfBoundsErr)
 	}
-	copy := c.Copy()
-	copy.items = append(c.items[:index], c.items[index+1:]...)
-	return copy, nil
+	collection := c.Copy()
+	collection.items = append(c.items[:index], c.items[index+1:]...)
+	return collection, nil
 }
 
 // Shuffle randomly shuffles the collection
