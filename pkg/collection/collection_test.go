@@ -2,7 +2,6 @@ package collection
 
 import (
 	"fmt"
-	"math/rand"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -16,22 +15,21 @@ func Test_Collection(t *testing.T) {
 	suits := []string{"Diamonds", "Hearts", "Clubs", "Spades"}
 	ranks := []string{"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"}
 
-	deck := &Collection[card]{}
-	deck.SetRandomness(rand.New(rand.NewSource(0)))
+	deck := NewCollection[card](0)
 	for _, suit := range suits {
 		for _, rank := range ranks {
-			deck = deck.Add(card{suit: suit, rank: rank})
+			deck.Add(card{suit: suit, rank: rank})
 		}
 	}
 
 	assert.True(t, deck.GetSize() == 52, "cards are missing")
 	assert.True(t, deck.items[0].suit == "Diamonds" && deck.items[0].rank == "A", "cards in incorrect order")
 
-	deck = deck.Shuffle()
+	deck.Shuffle()
 
 	assert.True(t, !(deck.items[0].suit == "Diamonds" && deck.items[0].rank == "A"), "failed to shuffle")
 
-	c, deck, err := deck.Draw()
+	c, err := deck.Draw()
 	if err != nil {
 		t.Fatal(err)
 		t.FailNow()
@@ -40,8 +38,7 @@ func Test_Collection(t *testing.T) {
 	assert.NotNil(t, c, "card is nil")
 	assert.True(t, len(deck.GetItems()) == 51, "cards are missing")
 
-	deck, err = deck.Remove(0)
-	if err != nil {
+	if err = deck.Remove(0); err != nil {
 		t.Fatal(err)
 		t.FailNow()
 	}
@@ -81,8 +78,7 @@ func Test_CollectionRemove(t *testing.T) {
 		},
 	}
 	for _, test := range testCases {
-		_, err := test.collection.Remove(test.index)
-		if (err != nil) != test.shouldError {
+		if err := test.collection.Remove(test.index); (err != nil) != test.shouldError {
 			t.Fatalf(test.name)
 			t.FailNow()
 		}
@@ -109,35 +105,59 @@ func Test_CollectionDraw(t *testing.T) {
 		},
 	}
 	for _, test := range testCases {
-		draw, collection, err := test.collection.Draw()
+		draw, err := test.collection.Draw()
 		if (err != nil) != test.shouldError {
 			t.Fatalf(test.name)
 			t.FailNow()
 		}
 		if !test.shouldError {
-			assert.Equal(t, test.collection.GetSize()-1, collection.GetSize())
 			assert.Equal(t, test.draw, *draw)
 		}
 	}
 }
 
-func Test_CollectionCopying(t *testing.T) {
-	c1 := &Collection[string]{}
-	c1 = c1.Add("A", "B", "C")
-	c1.SetRandomness(rand.New(rand.NewSource(0)))
+func Test_GetItem(t *testing.T) {
+	testCases := []struct {
+		name        string
+		collection  Collection[string]
+		index       int
+		item        string
+		shouldError bool
+	}{
+		{
+			name:        "get item on empty collection should error",
+			collection:  Collection[string]{},
+			index:       0,
+			shouldError: true,
+		},
+		{
+			name:        "get item on non-empty collection should not error",
+			collection:  Collection[string]{items: []string{"A", "B", "C"}},
+			index:       1,
+			item:        "B",
+			shouldError: false,
+		},
+	}
+	for _, test := range testCases {
+		item, err := test.collection.GetItem(test.index)
+		if (err != nil) != test.shouldError {
+			t.Fatalf(test.name)
+			t.FailNow()
+		}
+		if !test.shouldError {
+			assert.Equal(t, test.item, *item)
+		}
+	}
+}
 
-	_, c2, err := c1.Draw()
-	if err != nil {
+func Test_CollectionCloning(t *testing.T) {
+	c1 := NewCollection[string](0)
+	c1.Add("A", "B", "C")
+
+	c2 := c1.Clone()
+
+	if _, err := c1.Draw(); err != nil {
 		fmt.Println(err)
 	}
 	assert.True(t, c1.GetSize() != c2.GetSize())
-
-	c3, _ := c1.Remove(1)
-	assert.True(t, c1.GetSize() != c3.GetSize())
-
-	c4 := c1.Add("D")
-	assert.True(t, c1.GetSize() != c4.GetSize())
-
-	c5 := c1.Shuffle()
-	assert.True(t, c1.GetItems()[0] != c5.GetItems()[0])
 }
