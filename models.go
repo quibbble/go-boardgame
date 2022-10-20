@@ -38,10 +38,11 @@ type BoardGameSnapshot struct {
 	// Typically more data such as boards, decks, etc. are needed for a game but this field can be ignored if desired
 	MoreData interface{} `json:",omitempty"`
 
-	// Targets are a list of actions that can be performed on the game state
+	// Targets are typically a list of BoardGameAction that can be performed on the game state
 	// This can allow players to view all valid actions through a GUI
+	// This field is left as an interface to allow for different targeting approaches as well
 	// Optional feature not required to play a game and can be ignored if desired
-	Targets []*BoardGameAction `json:",omitempty"`
+	Targets interface{} `json:",omitempty"`
 
 	// Actions is a list of past game actions that have lead to the current game state
 	// This can allow players to view game logs of past actions
