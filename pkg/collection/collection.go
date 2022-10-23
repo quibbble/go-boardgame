@@ -50,6 +50,15 @@ func (c *Collection[T]) Remove(index int) error {
 	return nil
 }
 
+// Replace replaces the item at the given index with a replacement
+func (c *Collection[T]) Replace(index int, replacement T) error {
+	if index < 0 || index >= len(c.items) {
+		return ErrCollectionIndexOutOfBound
+	}
+	c.items[index] = replacement
+	return nil
+}
+
 // Shuffle randomly shuffles the collection
 func (c *Collection[T]) Shuffle() {
 	if c.seed == nil {
