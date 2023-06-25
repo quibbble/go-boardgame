@@ -2,14 +2,15 @@ package go_boardgame
 
 import (
 	"fmt"
-	"github.com/quibbble/go-boardgame/pkg/bgerr"
 	"strconv"
+
+	"github.com/quibbble/go-boardgame/pkg/bgerr"
 )
 
-// Common actions every game may utilize if desired
+// Common actions most game may utilize if desired
 const (
-	// ActionSetWinners sets the winner(s) of a game
-	ActionSetWinners = "SetWinners"
+	ActionSetWinners = "SetWinners" // ActionSetWinners sets the winner(s) of a game
+	ActionEndTurn    = "EndTurn"    // ActionEndTurn ends the turn for the given team
 )
 
 // SetWinnersActionDetails sets the current winner(s) of the game with Winners
@@ -60,4 +61,16 @@ func DecodeSetWinnersActionDetailsBGN(details, teams []string) (*SetWinnersActio
 	return &SetWinnersActionDetails{
 		Winners: winners,
 	}, nil
+}
+
+// EndTurnActionDetails are the action details for ending a team's turn
+type EndTurnActionDetails struct {
+}
+
+func (o *EndTurnActionDetails) EncodeBGN(teams []string) ([]string, error) {
+	return []string{}, nil
+}
+
+func DecodeEndTurnActionDetailsBGN(details, teams []string) (*EndTurnActionDetails, error) {
+	return &EndTurnActionDetails{}, nil
 }
