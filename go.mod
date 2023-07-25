@@ -1,6 +1,6 @@
 module github.com/quibbble/go-boardgame
 
-go 1.18
+go 1.20
 
 require (
 	github.com/mitchellh/mapstructure v1.4.2

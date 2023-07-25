@@ -81,6 +81,26 @@ func (c *Collection[T]) GetItem(index int) (*T, error) {
 	return &c.items[index], nil
 }
 
+// Contains returns whether or not the item is in the collection
+func (c *Collection[T]) Contains(item T, equals func(a, b T) bool) bool {
+	for _, it := range c.items {
+		if equals(item, it) {
+			return true
+		}
+	}
+	return false
+}
+
+// IndexOf returns the index of the item in the collection and returns -1 if not found
+func (c *Collection[T]) IndexOf(item T, equals func(a, b T) bool) int {
+	for idx, it := range c.items {
+		if equals(item, it) {
+			return idx
+		}
+	}
+	return -1
+}
+
 // GetItems returns the items in the collection
 func (c *Collection[T]) GetItems() []T {
 	return c.items
