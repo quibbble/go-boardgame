@@ -62,7 +62,7 @@ This package provides both a method of creating as well as parsing BGN text.
 ### Create BGN
 
 ```go
-game := &Game{
+bgn := &Game{
     Tags: map[string]string{"Game": "Carcassonne", "Teams": "TeamA, TeamB", "Seed": "123"}
     Actions: []Action{
         {
@@ -76,14 +76,11 @@ game := &Game{
         },
     }
 }
-formatted := game.String()
+raw := bgn.String()
 ```
 
 ### Parse BGN
 ```go
-sample := "[Game \"Carcassonne\"][Teams \"TeamA, TeamB\"][Seed \"123\"]0c 0a&1.2"
-r := strings.NewReader(sample)
-sc := scanner.Scanner{}
-sc.Init(r)
-game, err := Parse(&sc)
+raw := "[Game \"Carcassonne\"][Teams \"TeamA, TeamB\"][Seed \"123\"]0c 0a&1.2"
+bgn, err := Parse(raw)
 ```

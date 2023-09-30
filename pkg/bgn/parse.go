@@ -7,31 +7,30 @@ import (
 	"text/scanner"
 )
 
-// RequiredTags are the list of tags any game must include
-var RequiredTags = []string{
-	"Game",  // the name of the game being played
-	"Teams", // list of teams playing the game
-}
-
-func Parse(s *scanner.Scanner) (*Game, error) {
-	g := Game{Tags: map[string]string{}, Actions: []Action{}}
-	err := ParseTags(s, &g)
+func Parse(raw string) (*Game, error) {
+	bgn := &Game{Tags: map[string]string{}, Actions: []Action{}}
+	r := strings.NewReader(raw)
+	sc := &scanner.Scanner{}
+	sc.Init(r)
+	// this uses the GoTokens scanner defaults other than ScanFloats
+	sc.Mode = scanner.ScanIdents | scanner.ScanChars | scanner.ScanStrings | scanner.ScanRawStrings | scanner.ScanComments | scanner.SkipComments
+	err := parseTags(sc, bgn)
 	if err != nil {
 		return nil, err
 	}
 	for _, required := range RequiredTags {
-		if g.Tags[required] == "" {
+		if bgn.Tags[required] == "" {
 			return nil, fmt.Errorf("missing required %s tag", required)
 		}
 	}
-	err = ParseActions(s, &g)
+	err = parseActions(sc, bgn)
 	if err != nil {
 		return nil, err
 	}
-	return &g, nil
+	return bgn, nil
 }
 
-func ParseTags(s *scanner.Scanner, g *Game) error {
+func parseTags(s *scanner.Scanner, bgn *Game) error {
 	run := s.Peek()
 	inside := false
 	for run != scanner.EOF {
@@ -41,15 +40,15 @@ func ParseTags(s *scanner.Scanner, g *Game) error {
 				return fmt.Errorf("cannot nest right bracket for tags")
 			}
 			inside = true
-			run = s.Next()
+			_ = s.Next()
 		case ']':
 			if !inside {
 				return fmt.Errorf("missing starting right bracket for tags")
 			}
 			inside = false
-			run = s.Next()
-		case '\n', '\r', ' ':
-			run = s.Next()
+			_ = s.Next()
+		case '\n', '\r', '\t', ' ':
+			_ = s.Next()
 		default:
 			if !inside {
 				return nil
@@ -58,23 +57,26 @@ func ParseTags(s *scanner.Scanner, g *Game) error {
 			tag := s.TokenText()
 			s.Scan()
 			val := s.TokenText()
-			g.Tags[tag] = strings.Trim(val, "\"")
+			bgn.Tags[tag] = strings.Trim(val, "\"")
 		}
 		run = s.Peek()
 	}
 	return nil
 }
 
-func ParseActions(s *scanner.Scanner, g *Game) error {
+func parseActions(s *scanner.Scanner, g *Game) error {
 	run := s.Peek()
 	var action *Action
 	for run != scanner.EOF {
 		switch run {
 		case ' ':
-			run = s.Next()
+			_ = s.Next()
 		case '{':
-			for run != '}' && run != scanner.EOF {
+			for run != '}' {
 				run = s.Next()
+				if run == scanner.EOF {
+					return fmt.Errorf("missing comment closure")
+				}
 			}
 		default:
 			s.Scan()
@@ -84,12 +86,14 @@ func ParseActions(s *scanner.Scanner, g *Game) error {
 				}
 				s.Scan()
 				details := s.TokenText()
-				for s.Peek() != ' ' && s.Peek() != scanner.EOF {
+				peak := s.Peek()
+				for peak != ' ' && peak != scanner.EOF && peak != '\n' && peak != '\t' {
 					s.Scan()
 					if s.TokenText() == "&" {
 						return fmt.Errorf("multiple ampersands found in action")
 					}
 					details += s.TokenText()
+					peak = s.Peek()
 				}
 				split := strings.Split(details, ".")
 				action.Details = split

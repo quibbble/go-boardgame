@@ -1,10 +1,9 @@
 package bgn
 
 import (
-	"github.com/stretchr/testify/assert"
-	"strings"
 	"testing"
-	"text/scanner"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func Test_BGN_Parse(t *testing.T) {
@@ -68,13 +67,30 @@ func Test_BGN_Parse(t *testing.T) {
 			bgn:         "[Teams \"red, blue\"][Seed \"123\"][Game \"Carcassonne\"][Date \"11-01-2021\"]0a&1.2 {Comment} 0b&1.2.T.R 1c 1a&1.3 1b&1.3.K.B",
 			shouldError: false,
 		},
+		{
+			name: "multi line tags should succeed",
+			bgn: `
+			[Game "Tsuro"]
+			[Teams "red, blue"]
+			[Variant "Classic"]
+			[Seed "1696036843787"]
+	
+			0p&4.5.CHDAEBFG`,
+			shouldError: false,
+		},
+		{
+			name: "multi line actions should succeed",
+			bgn: `[Game "Tsuro"][Teams "red, blue"][Variant "Classic"][Seed "1696036843787"]
+
+			0p&4.5.CHDAEBFG 1p&0.4.CDEAFGHB 0p&3.5.ACBGDHEF 1p&0.3.AEBDCGFH
+			0p&5.5.EDFGHCAB
+			1p&0.2.CHDFEAGB`,
+			shouldError: false,
+		},
 	}
 
 	for _, test := range tests {
-		r := strings.NewReader(test.bgn)
-		sc := scanner.Scanner{}
-		sc.Init(r)
-		_, err := Parse(&sc)
+		_, err := Parse(test.bgn)
 		assert.Equal(t, test.shouldError, err != nil, test.name)
 	}
 }

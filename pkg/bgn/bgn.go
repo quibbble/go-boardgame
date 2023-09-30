@@ -1,6 +1,8 @@
 package bgn
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // Game is a representation of a game in Board Game Notation (BGN)
 type Game struct {
