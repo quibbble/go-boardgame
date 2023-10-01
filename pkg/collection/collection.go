@@ -14,13 +14,15 @@ var (
 // Collection is an abstraction on a deck, hand, etc and can be used in their place
 type Collection[T any] struct {
 	items []T
-	seed  *rand.Rand
+	seed  int64
+	r     *rand.Rand
 }
 
 func NewCollection[T any](seed int64) *Collection[T] {
 	return &Collection[T]{
 		items: make([]T, 0),
-		seed:  rand.New(rand.NewSource(seed)),
+		seed:  seed,
+		r:     rand.New(rand.NewSource(seed)),
 	}
 }
 
@@ -61,12 +63,14 @@ func (c *Collection[T]) Replace(index int, replacement T) error {
 
 // Shuffle randomly shuffles the collection
 func (c *Collection[T]) Shuffle() {
-	if c.seed == nil {
+	if c.r == nil {
 		// if random source was never set then set it manually
-		c.seed = rand.New(rand.NewSource(time.Now().Unix()))
+		seed := time.Now().Unix()
+		c.seed = seed
+		c.r = rand.New(rand.NewSource(seed))
 	}
 	for i := 0; i < len(c.items); i++ {
-		r := c.seed.Intn(len(c.items))
+		r := c.r.Intn(len(c.items))
 		if i != r {
 			c.items[r], c.items[i] = c.items[i], c.items[r]
 		}
@@ -109,6 +113,10 @@ func (c *Collection[T]) GetItems() []T {
 // GetSize returns the number of items in the collection
 func (c *Collection[T]) GetSize() int {
 	return len(c.items)
+}
+
+func (c *Collection[T]) GetSeed() int64 {
+	return c.seed
 }
 
 // Copy returns a new copy of the collection

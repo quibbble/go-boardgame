@@ -3,6 +3,7 @@ package collection
 import (
 	"fmt"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -160,4 +161,22 @@ func Test_CollectionCloning(t *testing.T) {
 		fmt.Println(err)
 	}
 	assert.True(t, c1.GetSize() != c2.GetSize())
+}
+
+func Test_CollectionRandomness(t *testing.T) {
+	seed := time.Now().Unix()
+	c1 := NewCollection[int](seed)
+	c1.Add(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)
+
+	c2 := NewCollection[int](seed)
+	c2.Add(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)
+
+	c1.Shuffle()
+	c2.Shuffle()
+
+	for i := 0; i < c1.GetSize(); i++ {
+		it1, _ := c1.GetItem(i)
+		it2, _ := c1.GetItem(i)
+		assert.Equal(t, it1, it2)
+	}
 }
