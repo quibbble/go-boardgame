@@ -24,10 +24,10 @@ Go-boardgame also contains a number of helpful packages that can be optionally u
 
 ## Examples
 
-[Tic-Tac-Toe](https://github.com/quibbble/go-boardgame/tree/main/examples/tictactoe) provides a simple example implementation.
+[Tic-Tac-Toe](https://github.com/quibbble/go-tictactoe) provides a simple example implementation.
 
 You can also view [all currently implemented games here](https://github.com/quibbble#currently-implemented-games).
 
 ## Future Plans
 
-Additional resources common to many games such as ~~decks, hands~~, boards, etc. will be added to the above packages list as time goes on to make writing the logic for these games a far faster process. Any ideas or PRs to improve or add additional features are always welcome.
+Additional resources common to many games will be added to the above packages list as time goes on to make writing the logic for these games a far faster process. Any ideas or PRs to improve or add additional features are always welcome.
