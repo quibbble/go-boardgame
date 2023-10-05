@@ -2,6 +2,7 @@ package bgn
 
 import (
 	"fmt"
+	"slices"
 	"strconv"
 	"strings"
 	"text/scanner"
@@ -86,14 +87,13 @@ func parseActions(s *scanner.Scanner, g *Game) error {
 				}
 				s.Scan()
 				details := s.TokenText()
-				peak := s.Peek()
-				for peak != ' ' && peak != scanner.EOF && peak != '\n' && peak != '\t' {
+				ignore := []rune{' ', '\n', '\t', scanner.EOF}
+				for !slices.Contains(ignore, s.Peek()) {
 					s.Scan()
 					if s.TokenText() == "&" {
 						return fmt.Errorf("multiple ampersands found in action")
 					}
 					details += s.TokenText()
-					peak = s.Peek()
 				}
 				split := strings.Split(details, ".")
 				action.Details = split
@@ -104,7 +104,8 @@ func parseActions(s *scanner.Scanner, g *Game) error {
 					g.Actions = append(g.Actions, *action)
 				}
 				base := s.TokenText()
-				for s.Peek() != ' ' && s.Peek() != '&' && s.Peek() != scanner.EOF {
+				ignore := []rune{' ', '\n', '\t', '&', scanner.EOF}
+				for !slices.Contains(ignore, s.Peek()) {
 					s.Scan()
 					base += s.TokenText()
 				}
