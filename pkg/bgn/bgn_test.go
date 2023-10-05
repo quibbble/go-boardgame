@@ -87,6 +87,26 @@ func Test_BGN_Parse(t *testing.T) {
 			1p&0.2.CHDFEAGB`,
 			shouldError: false,
 		},
+		{
+			name: "weird formatting should succeed",
+			bgn: `
+			
+			[Game "Tsuro"]
+			
+		 [Teams "red, blue"]
+			  
+					[Variant "Classic"]
+[Seed "1696036843787"]
+
+			0p&4.5.CHDAEBFG   1p&0.4.CDEAFGHB 	
+				0p&3.5.ACBGDHEF 1p&0.3.AEBDCGFH
+			0p&5.5.EDFGHCAB
+
+			 1p&0.2.CHDFEAGB
+			
+			`,
+			shouldError: false,
+		},
 	}
 
 	for _, test := range tests {

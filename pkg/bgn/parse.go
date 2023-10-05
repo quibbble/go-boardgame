@@ -109,6 +109,9 @@ func parseActions(s *scanner.Scanner, g *Game) error {
 					s.Scan()
 					base += s.TokenText()
 				}
+				if base == "" && s.Peek() == scanner.EOF {
+					return nil
+				}
 				if len(base) < 2 {
 					return fmt.Errorf("invalid action base")
 				}
