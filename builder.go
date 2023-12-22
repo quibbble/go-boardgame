@@ -7,6 +7,9 @@ type BoardGameBuilder interface {
 	// Create creates a game with desired options
 	Create(options *BoardGameOptions) (BoardGame, error)
 
+	// Info provides additional details about the game
+	Info() *BoardGameInfo
+
 	// Key gets the game's unique key, typically the name of the game
 	Key() string
 }

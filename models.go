@@ -10,6 +10,19 @@ type BoardGameOptions struct {
 	MoreOptions interface{} `json:",omitempty"`
 }
 
+// BoardGameInfo provides additional details about the game
+type BoardGameInfo struct {
+	// GameKey is the unique key that differentiates this game from others
+	GameKey string
+
+	// MinTeams and MaxTeams represents the min and max teams allowed when creating a new game
+	MinTeams, MaxTeams int
+
+	// MoreInfo allows for additional game specific info
+	// Additional info is not required for every game so this field can be ignored if desired
+	MoreInfo interface{} `json:",omitempty"`
+}
+
 // BoardGameAction represents an action that is performed on the game state
 type BoardGameAction struct {
 	// Team is the team performing the action - required
